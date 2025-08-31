@@ -30,7 +30,7 @@ export default function Footer() {
 
       {/* Bottom */}
       <div className="text-center text-xs mt-6 border-t border-gray-700 pt-4">
-        © 2025 MyShop. All rights reserved.
+        © 2025 MyShop By Mansheeno. All rights reserved.
       </div>
     </footer>
   );
