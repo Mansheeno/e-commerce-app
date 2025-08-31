@@ -8,6 +8,8 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import { CartProvider } from "./context/CartContext";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 export default function App() {
   return (
@@ -20,6 +22,9 @@ export default function App() {
             <Route path="/products" element={<ProductList />} />
             <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/checkout" element={<Checkout />} />
           </Routes>
         </main>

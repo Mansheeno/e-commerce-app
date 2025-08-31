@@ -2,46 +2,80 @@ import { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
 
-export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+export const CartProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState([]);
 
-  // Add product to cart
+  // Add to cart
   const addToCart = (product) => {
-    setCart((prev) => {
+    setCartItems((prev) => {
       const existing = prev.find((item) => item.id === product.id);
       if (existing) {
         return prev.map((item) =>
-          item.id === product.id ? { ...item, qty: item.qty + 1 } : item
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
       }
-      return [...prev, { ...product, qty: 1 }];
+      return [...prev, { ...product, quantity: 1 }];
     });
   };
 
-  // Remove product
+  // Remove item completely
   const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // Update quantity
+  // Clear cart
+  const clearCart = () => setCartItems([]);
+
+  // Update quantity directly
   const updateQty = (id, qty) => {
-    setCart((prev) =>
+    setCartItems((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, qty: Math.max(1, qty) } : item
+        item.id === id ? { ...item, quantity: Math.max(1, qty) } : item
       )
     );
   };
 
-  // Clear cart
-  const clearCart = () => setCart([]);
+  // Increment qty
+  const incrementQty = (id) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  // Decrement qty (min = 1)
+  const decrementQty = (id) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
+
+  // Cart count (for badge)
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, updateQty, clearCart }}
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        updateQty,
+        incrementQty,
+        decrementQty,
+        cartCount,
+      }}
     >
       {children}
     </CartContext.Provider>
   );
-}
+};
 
 export const useCart = () => useContext(CartContext);
