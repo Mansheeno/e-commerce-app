@@ -14,13 +14,13 @@ export default function Checkout() {
     reference: new Date().getTime().toString(),
     email: form.email,
     amount: total * 100, // kobo
-    publicKey: "pk_test_your_paystack_key",
+    publicKey: "pk_test_6809dbe22390fd935c97c513b0717173f1b50828",
   };
   const initializePaystack = usePaystackPayment(paystackConfig);
 
   // --- FLUTTERWAVE CONFIG ---
   const flutterwaveConfig = {
-    public_key: "FLWPUBK_TEST-xxxxxxxxxxxxxxxxxxxx",
+    public_key: "FLWPUBK_TEST-8184bbd2d474a6a01098461651a67646-X",
     tx_ref: Date.now().toString(),
     amount: total,
     currency: "NGN",
